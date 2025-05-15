@@ -64,6 +64,16 @@ After installation, follow these steps to get started:
    - Vote on questions by selecting your preferred option
    - View statistics and results for each question
 
+## Demo
+
+
+
+https://github.com/user-attachments/assets/38280905-b22a-4650-801b-a639883624f1
+
+
+
+---
+
 ## 👤 Author
 
 <table>
