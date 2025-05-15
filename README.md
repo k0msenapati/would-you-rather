@@ -87,3 +87,5 @@ After installation, follow these steps to get started:
 <p align="center">
     <strong>🌟 If you find this project helpful, please give it a star on GitHub! 🌟</strong>
 </p>
+
+# Thanks to Pheonix Coder for the [starter template](https://github.com/pheonix-coder/flask-minimal-template)
