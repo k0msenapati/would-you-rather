@@ -69,7 +69,7 @@ After installation, follow these steps to get started:
 <table>
   <tbody>
     <tr>
-        <td align="center" valign="top" width="14.28%"><a href="https://github.com/k0msenapati"><img src="https://github.com/k0msenapati.png?s=100" width="130px;" alt="Arnav K"/></a><br /><a href="https://github.com/k0msenapati"<h4><b>Arnav K</b></h3></a></td>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/k0msenapati"><img src="https://github.com/k0msenapati.png?s=100" width="130px;" alt="k0msenapati"/></a><br /><a href="https://github.com/k0msenapati"<h4><b>K Om Senapati</b></h3></a></td>
     </tr>
   </tbody>
 </table>
