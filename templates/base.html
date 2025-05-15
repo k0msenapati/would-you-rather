@@ -1,26 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>📖 Tale Craft</title>
-    <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
-</head>
-<body>
-    <header>
-        <menu>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-            {% else %}
-                <li><a href="{{ url_for('signup') }}">Sign Up</a></li>
-                <li><a href="{{ url_for('login') }}">Log In</a></li>
-            {% endif %} 
-        </menu>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Would You Rather</title>
+    <!-- Toastify JS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]"></div>
+    <header class="py-4 px-4">
+      <nav class="bg-blue-600 p-4 px-4 sm:px-6 rounded-2xl shadow-lg mx-auto max-w-4xl flex flex-wrap items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <a href="{{ url_for('index') }}" class="text-xl font-bold text-white">Would You Rather</a>
+          {% if current_user.is_authenticated %}
+          <a href="{{ url_for('dashboard') }}" class="text-white hover:text-blue-200">Dashboard</a>
+          {% endif %}
+        </div>
+        <div class="flex items-center space-x-2 sm:space-x-4">
+          {% if current_user.is_authenticated %}
+          <a
+            href="{{ url_for('user_profile', user_id=current_user.uid) }}"
+            class="text-white hover:text-blue-200 text-sm sm:text-base"
+            >My Profile</a
+          >
+          <a
+            href="{{ url_for('logout') }}"
+            class="bg-white text-blue-600 hover:bg-blue-100 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold"
+            >Logout</a
+          >
+          {% else %}
+          <a href="{{ url_for('signup') }}" class="text-white hover:text-blue-200 text-sm sm:text-base">Sign Up</a>
+          <a
+            href="{{ url_for('login') }}"
+            class="bg-white text-blue-600 hover:bg-blue-100 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold"
+            >Log In</a
+          >
+          {% endif %}
+        </div>
+      </nav>
     </header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-</body>
+    <main class="flex-1">{% block content %} {% endblock %}</main>
+
+    <!-- Hidden Flash Messages (for JS processing) -->
+    <div id="flash-messages" class="hidden">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <!-- Only store the most recent message -->
+      <div class="flash-message" data-message="{{ messages[-1] }}"></div>
+      {% endif %} {% endwith %}
+    </div>
+
+    <script>
+      // Display only the most recent flash message as a toast
+      document.addEventListener('DOMContentLoaded', function () {
+        const flashMessage = document.querySelector('.flash-message')
+        if (flashMessage) {
+          const message = flashMessage.getAttribute('data-message')
+          Toastify({
+            text: message,
+            duration: 5000,
+            close: true,
+            gravity: 'top',
+            position: 'right',
+            stopOnFocus: true,
+            onClick: function () {}, // Callback after click
+          }).showToast()
+        }
+      })
+    </script>
+  </body>
 </html>

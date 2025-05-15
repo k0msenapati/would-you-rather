@@ -27,7 +27,7 @@ def create_app():
     def load_user(uid):
         return User.query.get(uid)
 
-    from routes import register_routes
+    from router.init_routes import register_routes
 
     register_routes(app, db, bcrypt)
 

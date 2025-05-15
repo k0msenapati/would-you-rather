@@ -1,80 +1,89 @@
-# Flask Starter Template
+<h1 align="center">📝 Would You Rather 📝</h1>
+<h2 align="center">Create and Vote on Engaging Dilemmas</h2>
 
-Welcome to the **Flask Starter Template**! This template provides a solid starting point for building a Flask web application with authentication, database integration, templating, and minimal styling using [Matcha CSS](https://matcha.mizu.sh/).
+> [!NOTE]
+> 
+> Would You Rather is an interactive web application that allows users to create, share, and vote on "Would You Rather" questions. Users can sign up, create their own dilemmas, vote on others' questions, and track statistics on their profile. Built with Flask, SQLAlchemy, and styled with Tailwind CSS, this application provides a fun and engaging way to explore hypothetical choices.
 
-## What is This Template?
+## 🌟 Features
 
-This template includes basic features that every Flask developer needs when starting a new project. It offers:
-- Authentication system (signup, login, logout)
-- Database integration with SQLAlchemy
-- Templating with Jinja2
-- Minimal styling using Matcha CSS
-- Protected routes accessible only after login
+> **Would You Rather** features intro:
 
-You can quickly build upon this structure and add more features as needed!
+- **User Authentication** – Secure signup and login system with personalized user profiles
+- **Create Questions** – Easily create your own "Would You Rather" dilemmas with option A and B
+- **Vote System** – Cast your vote on questions and see real-time statistics
+- **Categories** – Organize questions with custom categories for better discovery
+- **User Profiles** – View your activity, statistics, and voting preferences
+- **Responsive Design** – Beautiful, modern UI that works on all devices
 
-## Technologies Used
+## 💻 Installation
 
-- **Flask**: A lightweight WSGI web application framework in Python.
-- **SQLAlchemy**: SQL toolkit and Object-Relational Mapping (ORM) for Python.
-- **Flask-Migrate**: Extension that handles SQLAlchemy database migrations via Alembic.
-- **Matcha CSS**: A Drop-in semantic styling library in pure CSS. [Learn more about Matcha CSS here](https://matcha.mizu.sh/).
+> You can set up **Would You Rather** with these commands:
 
-For a detailed breakdown of this template, check out [this video](https://youtu.be/oQ5UfJqW5Jo) by NeuralNine.
-
-## Routes
-
-| Route        | Description                               |
-|--------------|-------------------------------------------|
-| `/`          | Landing page                              |
-| `/signup`    | Sign up for a new account                 |
-| `/login`     | Log into an existing account              |
-| `/logout`    | Log out of the current session            |
-| `/protected` | A protected page accessible after login   |
-
-## Running Instructions
-
-To run this template locally, follow these steps:
-
-1. **Clone the Repository**
-   ```bash
-   git clone <repository_url>
-   cd flask_template
-   ```
-
-2. **Create and Activate a Virtual Environment**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows, use .venv\Scripts\activate
-   ```
-
-3. **Install Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set Up the Database**
-   Initialize, migrate, and upgrade the database.
-   ```bash
-   flask db init
-   flask db migrate
-   flask db upgrade
-   ```
-
-5. **Run the Application**
-   ```bash
-   python run.py
-   ```
-
-## Database Migrations
-
-Any time you make changes to the models, ensure you follow these steps to migrate and apply changes to the database:
+###### terminal
 
 ```bash
+# Clone the repository
+git clone https://github.com/k0msenapati/would-you-rather
+cd would-you-rather
+
+# Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate  # On Windows, use .venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Set up the database
+flask db init
 flask db migrate
 flask db upgrade
+
+# Run the application
+python run.py
 ```
 
-## Contributing
+## 🚀 Getting Started
 
-If you find this template useful, give it a ⭐ on GitHub!
+After installation, follow these steps to get started:
+
+1. **Access the Application**
+   - Open your browser and navigate to `http://localhost:5000`
+
+2. **Create an Account**
+   - Click on "Sign Up" to create a new account
+   - Fill in your name, username, email, and password
+
+3. **Create Your First Question**
+   - After logging in, click on "Create New Question" button
+   - Enter two options for your "Would You Rather" question
+   - Add optional categories to help organize your question
+
+4. **Vote and Explore**
+   - Browse questions on the dashboard
+   - Vote on questions by selecting your preferred option
+   - View statistics and results for each question
+
+## 👤 Author
+
+<table>
+  <tbody>
+    <tr>
+        <td align="center" valign="top" width="14.28%"><a href="https://github.com/k0msenapati"><img src="https://github.com/k0msenapati.png?s=100" width="130px;" alt="Arnav K"/></a><br /><a href="https://github.com/k0msenapati"<h4><b>Arnav K</b></h3></a></td>
+    </tr>
+  </tbody>
+</table>
+
+---
+
+<h2 align="center">📄 License</h2>
+
+<p align="center">
+<strong>Would You Rather</strong> is licensed under the <code>Unlicense</code> License. See the <a href="https://github.com/k0msenapati/would-you-rather/blob/main/LICENSE">LICENSE</a> file for more details.
+</p>
+
+---
+
+<p align="center">
+    <strong>🌟 If you find this project helpful, please give it a star on GitHub! 🌟</strong>
+</p>

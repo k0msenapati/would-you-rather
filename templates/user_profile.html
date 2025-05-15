@@ -1,0 +1,176 @@
+{% extends "base.html" %} {% block content %}
+<div class="flex flex-col items-center justify-center">
+  <div class="w-full max-w-6xl px-4 py-6 mb-4">
+    <a href="{{ url_for('dashboard') }}" class="bg-blue-600 text-white hover:bg-blue-700 px-6 py-3 rounded-full text-lg font-semibold shadow-lg transition duration-300 ease-in-out transform hover:scale-105 mb-8 flex items-center max-w-fit">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+      </svg>
+      Back to Dashboard
+    </a>
+    <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8 w-full text-gray-800 mb-8">
+      <div class="flex flex-col md:flex-row items-center mb-6 pb-6 border-b border-gray-200">
+        <div
+          class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mb-4 md:mb-0 md:mr-6"
+        >
+          {{ profile_user.name[0] }}{{ profile_user.name.split()[1][0] if
+          profile_user.name.split()|length > 1 else '' }}
+        </div>
+        <div class="text-center md:text-left">
+          <h2 class="text-2xl font-semibold text-gray-700">{{ profile_user.name }}</h2>
+          <p class="text-gray-500">@{{ profile_user.username }}</p>
+          <p class="text-gray-500">{{ profile_user.email }}</p>
+        </div>
+      </div>
+      <!-- Stats Overview -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div class="bg-gray-50 p-4 rounded-lg text-center">
+              <div class="text-3xl font-bold text-blue-600">{{ questions|length }}</div>
+              <div class="text-sm text-gray-500">Questions Created</div>
+              <div class="mt-2 text-xs text-gray-500">
+                  {% if questions|length < 5 %}
+                      <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">Beginner</span>
+                  {% elif questions|length < 10 %}
+                      <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">Regular</span>
+                  {% else %}
+                      <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">Power User</span>
+                  {% endif %}
+              </div>
+          </div>
+          
+          <div class="bg-gray-50 p-4 rounded-lg text-center">
+              <div class="text-3xl font-bold text-green-600">{{ answered_questions|length }}</div>
+              <div class="text-sm text-gray-500">Votes Cast</div>
+              <div class="mt-2 text-xs text-gray-500">
+                  {% if answered_questions|length < 5 %}
+                      <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">Casual Voter</span>
+                  {% elif answered_questions|length < 15 %}
+                      <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">Active Voter</span>
+                  {% else %}
+                      <span class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-0.5 rounded">Super Voter</span>
+                  {% endif %}
+              </div>
+          </div>
+          
+          <div class="bg-gray-50 p-4 rounded-lg text-center">
+              {% set option_a_count = namespace(value=0) %}
+              {% set option_b_count = namespace(value=0) %}
+              
+              {% for item in answered_questions %}
+                  {% if item.chosen_option == 'a' %}
+                      {% set option_a_count.value = option_a_count.value + 1 %}
+                  {% else %}
+                      {% set option_b_count.value = option_b_count.value + 1 %}
+                  {% endif %}
+              {% endfor %}
+              
+              {% if answered_questions|length > 0 %}
+                  {% set option_a_percent = (option_a_count.value / answered_questions|length * 100)|round|int %}
+                  {% set option_b_percent = (option_b_count.value / answered_questions|length * 100)|round|int %}
+              {% else %}
+                  {% set option_a_percent = 0 %}
+                  {% set option_b_percent = 0 %}
+              {% endif %}
+              
+              <div class="text-lg font-semibold">Vote Preferences</div>
+              <div class="flex justify-between items-center mt-2">
+                  <div class="text-center w-1/2">
+                      <div class="text-xl font-bold text-green-600">{{ option_a_percent }}%</div>
+                      <div class="text-xs text-gray-500">Option A</div>
+                  </div>
+                  <div class="text-center w-1/2">
+                      <div class="text-xl font-bold text-blue-600">{{ option_b_percent }}%</div>
+                      <div class="text-xs text-gray-500">Option B</div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Questions Created Section -->
+      <div class="mb-8">
+        <h2 class="text-2xl font-semibold mb-4">Questions Created ({{ questions|length }})</h2>
+        {% if questions %}
+        <div class="space-y-4">
+          {% for question in questions %}
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold">{{ question.text_a }} or {{ question.text_b }}?</h3>
+            {% if question.categories and question.categories|length > 0 %}
+            <div class="flex flex-wrap gap-1 mt-1">
+              {% for category in question.categories %}
+              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded"
+                >{{ category }}</span
+              >
+              {% endfor %}
+            </div>
+            {% endif %}
+            <div class="flex justify-between items-center mt-2">
+              <span class="text-sm text-gray-500"
+                >Created on {{ question.created_at.strftime('%Y-%m-%d %H:%M') }}</span
+              >
+              <a
+                href="{{ url_for('view_question', question_id=question.id) }}"
+                class="text-blue-500 hover:text-blue-700"
+                >View Details</a
+              >
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-gray-500">No questions created yet.</p>
+        {% endif %}
+      </div>
+
+      <!-- Answers Section -->
+      <div>
+        <h2 class="text-2xl font-semibold mb-4">Votes Cast ({{ answered_questions|length }})</h2>
+        {% if answered_questions %}
+        <div class="space-y-4">
+          {% for item in answered_questions %}
+          <div class="bg-green-50 p-4 rounded-lg">
+            <h3 class="text-lg font-semibold">
+              {{ item.question.text_a }} or {{ item.question.text_b }}?
+            </h3>
+            {% if item.question.categories and item.question.categories|length > 0 %}
+            <div class="flex flex-wrap gap-1 mt-1">
+              {% for category in item.question.categories %}
+              <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded"
+                >{{ category }}</span
+              >
+              {% endfor %}
+            </div>
+            {% endif %}
+            <p class="mt-2">
+              Voted for: {% if item.chosen_option == 'a' %}
+              <span class="font-medium text-green-600">"{{ item.question.text_a }}"</span>
+              {% else %}
+              <span class="font-medium text-blue-600">"{{ item.question.text_b }}"</span>
+              {% endif %}
+            </p>
+            <div class="flex justify-between items-center mt-2">
+              <span class="text-sm text-gray-500"
+                >Voted on {{ item.created_at.strftime('%Y-%m-%d %H:%M') }}</span
+              >
+              <a
+                href="{{ url_for('view_question', question_id=item.question.id) }}"
+                class="text-blue-500 hover:text-blue-700"
+                >View Question</a
+              >
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-gray-500">No votes cast yet.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <a
+      href="{{ url_for('dashboard') }}"
+      class="bg-white text-blue-500 hover:bg-blue-100 px-6 py-3 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 mb-8"
+    >
+      Back to Dashboard
+    </a>
+  </div>
+  {% endblock %}
+</div>

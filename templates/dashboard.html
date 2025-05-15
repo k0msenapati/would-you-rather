@@ -1,0 +1,73 @@
+{% extends "base.html" %} {% block content %}
+<div class="flex flex-col items-center justify-center relative">
+  <a
+    href="{{ url_for('create_question') }}"
+    class="fixed bottom-8 right-8 bg-blue-600 text-white hover:bg-blue-700 px-6 py-3 rounded-full text-lg font-semibold shadow-lg transition duration-300 ease-in-out transform hover:scale-105 z-10 flex items-center"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5 mr-2"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+        clip-rule="evenodd"
+      />
+    </svg>
+    Create New Question
+  </a>
+  <div class="w-full max-w-6xl px-4 py-6 mb-4">
+    <h1 class="text-2xl md:text-3xl font-bold text-gray-700 text-center">
+      Would You Rather Questions
+    </h1>
+  </div>
+  <div
+    class="w-full max-w-6xl px-4 sm:px-6 md:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 mb-16"
+  >
+    {% for question in questions %}
+    <div
+      class="bg-white p-4 sm:p-6 md:p-8 rounded-2xl shadow-lg text-gray-800 flex flex-col justify-between h-full"
+    >
+      <div>
+        <h3 class="text-sm font-medium text-blue-600 uppercase mb-1">Would You Rather</h3>
+        <h2 class="text-2xl font-semibold mb-4">{{ question.text_a }} or {{ question.text_b }}?</h2>
+        <p class="text-gray-600 text-sm mb-2">
+          Created by
+          <a
+            href="{{ url_for('user_profile', user_id=question.author.uid) }}"
+            class="text-blue-500 hover:underline"
+          >
+            {{ question.author.username }}
+          </a>
+          on {{ question.created_at.strftime('%Y-%m-%d %H:%M') }}
+        </p>
+
+        {% if question.categories and question.categories|length > 0 %}
+        <div class="flex flex-wrap gap-1 mb-4">
+          {% for category in question.categories %}
+          <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded"
+            >{{ category }}</span
+          >
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="mb-4"></div>
+        {% endif %}
+      </div>
+      <a
+        href="{{ url_for('view_question', question_id=question.id) }}"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 md:py-3 md:px-5 rounded-full transition duration-300 ease-in-out transform hover:scale-105 self-start text-sm md:text-base flex items-center"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+          <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+        </svg>
+        View Question and Stats
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
